@@ -11,13 +11,26 @@ class game:
         self.player2.playerDeck.Shuffle()
 
 
-    #Comparing top cards
-    def Compare(self):
 
+    def War(self):
+        warCards = []
+        warCards2 = []
+        for i in range (3):
+            warCards.append(self.player1.getTopCard())
+            self.player1.playerDeck.cards.pop(0)
+        for i in range (3):
+            warCards2.append(self.player2.getTopCard())
+            self.player2.playerDeck.cards.pop(0)
+        self.Compare()
+        # FIXME We don't know where to give the six war cards to
+
+    # Comparing top cards
+    def Compare(self):
         topCard = self.player1.getTopCard()
         print("Player 1s' card is: "+ str(topCard) + ".")
         topCard2 = self.player2.getTopCard()
         print("Player 2s' card is: " + str(topCard2) + ".")
+        self.War()
 
         if topCard > topCard2:
             self.player1.playerDeck.cards.append(topCard2)
@@ -32,20 +45,13 @@ class game:
 
 
         else:
-
             print("War")
-
+            #self.War()
+            # FIXME War is called before popping, the final card after war will be
+            # FIXME the same as the card that cause war.
 
         self.player2.playerDeck.cards.pop(0)
         self.player1.playerDeck.cards.pop(0)
-
-    def War(self):
-        warCards = []
-        for i in range (3):
-            warCards.append(self.player1.getTopCard())
-
-        first1 = self.player1.getTopCard(self)
-        second1 = self.pla
 
 
 game1 = game()
