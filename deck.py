@@ -7,7 +7,7 @@ class deck:
             for j in range(13): #Numbers
                 #print("i: " + str(i) + "  j: " + str(j))
 
-                self.cards.append(card.card(i, j))
+                self.cards.append(card.card(i, j+2))
 
     def Shuffle(self):
         random.shuffle(self.cards)

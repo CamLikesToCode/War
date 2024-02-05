@@ -14,8 +14,20 @@ class card:
         if self.suit == 3:
             suitStr = "Clubs"
 
+        if self.number < 11:
+            return str(self.number) + " of " + suitStr
 
-        return str(self.number) + " of " + suitStr
+        elif self.number == 11:
+            return "Jack of " + suitStr
+
+        elif self.number == 12:
+            return "Queen of" + suitStr
+
+        elif self.number == 13:
+            return "King of " + suitStr
+
+        else:
+            return "Ace of " + suitStr
 
 
     def __lt__(self, other):
