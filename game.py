@@ -1,10 +1,12 @@
 import player
 import time
 
-
 class game:
-    def __init__(self):
+    def __init__(self, name1, name2, sleep):
         print('Game is starting!')
+        self.sleep = sleep
+        self.p1 = name1
+        self.p2 = name2
         self.player1 = player.Player()
         self.player1.playerDeck.Shuffle()
         self.player2 = player.Player()
@@ -16,24 +18,27 @@ class game:
         warCards = []
         warCards2 = []
         for i in range (4):
-            warCards.append(self.player1.getTopCard())
+            if len(self.player1.playerDeck.cards) >= 2:
+                warCards.append(self.player1.getTopCard())
+                self.player1.playerDeck.cards.pop(0)
 
-            self.player1.playerDeck.cards.pop(0)
         for i in range (4):
-            warCards2.append(self.player2.getTopCard())
-            self.player2.playerDeck.cards.pop(0)
+            if len(self.player2.playerDeck.cards) >= 2:
+                warCards2.append(self.player2.getTopCard())
+                self.player2.playerDeck.cards.pop(0)
         winner = self.Compare()
 
+
         if winner == 1:
-            print("Player 1 got " + str(warCards) + " and " + str(warCards2))
+            print(self.p1 + " got " + str(warCards) + " and " + str(warCards2))
             for i in warCards:
                 self.player1.playerDeck.cards.append(i)
             for i in warCards2:
                 self.player1.playerDeck.cards.append(i)
             return 1
-                            #FIXME ungroup gained cards
+
         elif winner == 2:
-            print("Player 2 got " + str(warCards) + " and " + str(warCards2))
+            print(self.p2 + " got " + str(warCards) + " and " + str(warCards2))
             for i in warCards:
                 self.player2.playerDeck.cards.append(i)
             for i in warCards2:
@@ -43,16 +48,19 @@ class game:
     # Comparing top cards
     def Compare(self):
         topCard = self.player1.getTopCard()
-        print("Player 1s' card is: "+ str(topCard) + ".")
+        print("")
+        print(self.p1 + "'s card is: "+ str(topCard) + ".")
         topCard2 = self.player2.getTopCard()
-        print("Player 2s' card is: " + str(topCard2) + ".")
+        print("")
+        print(self.p2 + "'s card is: " + str(topCard2) + ".")
 
 
 
         if topCard > topCard2:
             self.player1.playerDeck.cards.append(topCard2)
             self.player1.playerDeck.cards.append(topCard)
-            print('Player 1 won!')
+            print("")
+            print(self.p1 + ' won!')
             self.player2.playerDeck.cards.pop(0)
             self.player1.playerDeck.cards.pop(0)
 
@@ -63,7 +71,7 @@ class game:
         elif topCard2 > topCard:
             self.player2.playerDeck.cards.append(topCard)
             self.player2.playerDeck.cards.append(topCard2)
-            print('Player 2 won!')
+            print(self.p2 + ' won!')
             self.player2.playerDeck.cards.pop(0)
             self.player1.playerDeck.cards.pop(0)
 
@@ -77,12 +85,19 @@ class game:
 
 
     def printCardCount(self):
-        print(str(len(self.player1.playerDeck.cards)) + " cards in Player 1s' deck")
-        print(str(len(self.player2.playerDeck.cards)) + " cards in Player 2s' deck")
+        print("")
+        print(str(len(self.player1.playerDeck.cards)) + " cards in " + self.p1 + "'s deck")
 
+    def playGame(self):
+        while len(self.player1.playerDeck.cards) != 0 and len(self.player2.playerDeck.cards) != 0:
+            time.sleep(self.sleep)
+            self.Compare()
+            self.printCardCount()
 
+        if len(self.player1.playerDeck.cards) == 0 and  len(self.player2.playerDeck.cards) != 0:
+            print(self.p2 + " won!")
+            print("")
 
-
-game1 = game()
-game1.Compare()
-game1.printCardCount()
+        else:
+            print(self.p1 + " won!")
+            print()

@@ -21,7 +21,7 @@ class card:
             return "Jack of " + suitStr
 
         elif self.number == 12:
-            return "Queen of" + suitStr
+            return "Queen of " + suitStr
 
         elif self.number == 13:
             return "King of " + suitStr
